@@ -1,0 +1,164 @@
+
+Uses the servo library 
+
+Press keys 1 to 9 to make the servos move in a direction or stop 
+
+*/
+
+#include <Servo.h> 
+
+Servo myServoLeft;               // servo 
+Servo myServoRight;                   
+
+int posLeft = 90;   
+int posRight = 90;  
+                    
+
+char var=0;         
+
+void setup() 
+{ 
+
+  // initialize serial:
+  Serial.begin(9600);
+  
+  myServoLeft.attach(10);  // attaches the Left servo on pin 9 to                              // myServoLeft object
+  myServoRight.attach(5);  // attaches the Right servo on pin 10 to                            // myServoRight object 
+  
+  stopMoving();            
+} 
+
+void loop() 
+{ 
+  Serial.flush();          /
+  
+  var = Serial.read();     
+  
+  switch (var) 
+  {
+    case '1':
+      delay(100);
+      moveForward();
+      break;
+    case '2':
+      moveBackward();
+      delay(100);
+      break;
+    case '3':
+      leftTurn();
+      break;
+    case '4':
+      rightTurn();
+      delay(100);
+      break;
+    case '5':
+      stopMoving();
+      break;
+    case '6':
+     stopMoving();
+      break;
+    case '7':
+      stopMoving();
+      break;
+    case '8':
+      stopMoving();
+      break;
+    case '9':
+      stopMoving();
+      break;  
+  }  
+}
+
+void moveForward()
+{
+  
+  Serial.print("Moving Forwards ");
+  Serial.println();
+  
+  //set left servo going forward
+  posLeft = 0;
+  myServoLeft.write(posLeft);
+  
+  //set Right servo going forward
+  posRight = 180;
+  myServoRight.write(posRight);
+  
+  Serial.flush();
+  
+  delay(15);
+  
+}
+
+void moveBackward()
+{
+    
+  Serial.print("Moving Back ");
+  Serial.println();
+  
+  //set left servo going back
+  posLeft = 180;
+  myServoLeft.write(posLeft);
+  
+  //set Right servo going back
+  posRight = 0;
+  myServoRight.write(posRight);
+  
+  Serial.flush();
+    
+  delay(15);
+  
+}
+
+void leftTurn()
+{
+  Serial.print("Turning Left ");
+  Serial.println();
+   
+  //set left servo going back
+  posLeft = 0;
+  myServoLeft.write(posLeft);
+  
+  //set Right servo going back
+  posRight = 0;
+  myServoRight.write(posRight);
+  
+  Serial.flush();
+  
+  delay(15);
+}
+
+void rightTurn()
+{
+  Serial.print("Turning Right ");
+  Serial.println();
+  
+  //set left servo going back
+  posLeft = 180;
+  myServoLeft.write(posLeft);
+  
+  //set Right servo going back
+  posRight = 180;
+  myServoRight.write(posRight);
+  
+  Serial.flush();
+  
+  delay(15);
+}
+
+void stopMoving()
+{
+  Serial.print("Robot Halted");
+  Serial.println();
+  
+  //set left servo to stop
+  posLeft = 90;
+  myServoLeft.write(posLeft);
+  
+  //set Right servo to stop
+  posRight = 90;
+  myServoRight.write(posRight);
+  
+  Serial.flush();
+  
+  delay(15);  
+}
